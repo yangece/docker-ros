@@ -112,13 +112,6 @@ RUN apt-get update && apt-get -y --quiet --no-install-recommends install \
     && apt-get clean autoclean \
     && rm -rf /var/lib/apt/lists/{apt,dpkg,cache,log} /tmp/* /var/tmp/*
 
-# gtest
-#RUN cd /usr/src/gtest \
-#    && mkdir build && cd build \
-#    && cmake .. && make -j$(nproc) \
-#    && cp *.a /usr/lib \
-#    && cd .. && rm -rf build
-
 # Install Python 3 pip build dependencies first.
 RUN pip3 install wheel setuptools
 
@@ -126,10 +119,6 @@ RUN pip3 install wheel setuptools
 RUN pip3 install argparse argcomplete coverage cerberus empy jinja2 kconfiglib \
     matplotlib==3.0.* numpy nunavut>=1.1.0 packaging pkgconfig pyros-genmsg pyulog \
     pyyaml requests serial six toml psutil pyulog wheel jsonschema
-
-# manual ccache setup
-#RUN ln -s /usr/bin/ccache /usr/lib/ccache/cc \
-#   && ln -s /usr/bin/ccache /usr/lib/ccache/c++
 
 # astyle v3.1
 RUN wget -q https://downloads.sourceforge.net/project/astyle/astyle/astyle%203.1/astyle_3.1_linux.tar.gz -O /tmp/astyle.tar.gz \
@@ -163,7 +152,7 @@ RUN echo "export ROSLAUNCH_SSH_UNKNOWN=1" >> /root/.bashrc
 RUN echo "source /opt/ros/noetic/setup.zsh" >> /root/.zshrc
 RUN echo "export ROSLAUNCH_SSH_UNKNOWN=1" >> /root/.zshrc
 
-# Install necessary packages (CORE3D)
+# Install packages (based on previous experience, may not be all necessary)
 RUN apt-get update && apt-get install -y -qq \
 iputils-ping \
 build-essential
